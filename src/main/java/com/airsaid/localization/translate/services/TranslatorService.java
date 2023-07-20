@@ -18,25 +18,19 @@
 package com.airsaid.localization.translate.services;
 
 import com.airsaid.localization.translate.AbstractTranslator;
-import com.airsaid.localization.translate.impl.ali.AliTranslator;
-import com.airsaid.localization.translate.impl.baidu.BaiduTranslator;
 import com.airsaid.localization.translate.impl.google.GoogleTranslator;
-import com.airsaid.localization.translate.impl.googleapi.GoogleApiTranslator;
-import com.airsaid.localization.translate.impl.microsoft.MicrosoftTranslator;
-import com.airsaid.localization.translate.impl.youdao.YoudaoTranslator;
 import com.airsaid.localization.translate.interceptors.EscapeCharactersInterceptor;
 import com.airsaid.localization.translate.lang.Lang;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.components.Service;
 import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.diagnostic.Logger;
+import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.StringUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Consumer;
 
 /**
@@ -61,25 +55,13 @@ public final class TranslatorService {
 
   public TranslatorService() {
     translators = new LinkedHashMap<>();
-
-    GoogleTranslator googleTranslator = new GoogleTranslator();
-    translators.put(googleTranslator.getKey(), googleTranslator);
-    defaultTranslator = googleTranslator;
-
-    GoogleApiTranslator googleApiTranslator = new GoogleApiTranslator();
-    translators.put(googleApiTranslator.getKey(), googleApiTranslator);
-
-    MicrosoftTranslator microsoftTranslator = new MicrosoftTranslator();
-    translators.put(microsoftTranslator.getKey(), microsoftTranslator);
-
-    BaiduTranslator baiduTranslator = new BaiduTranslator();
-    translators.put(baiduTranslator.getKey(), baiduTranslator);
-
-    YoudaoTranslator youdaoTranslator = new YoudaoTranslator();
-    translators.put(youdaoTranslator.getKey(), youdaoTranslator);
-
-    AliTranslator aliTranslator = new AliTranslator();
-    translators.put(aliTranslator.getKey(), aliTranslator);
+    ServiceLoader<AbstractTranslator> serviceLoader = ServiceLoader.load(
+        AbstractTranslator.class, getClass().getClassLoader()
+    );
+    for (AbstractTranslator translator : serviceLoader) {
+      translators.put(translator.getKey(), translator);
+    }
+    defaultTranslator = translators.get(GoogleTranslator.KEY);
 
     cacheService = TranslationCacheService.getInstance();
 
@@ -130,7 +112,10 @@ public final class TranslatorService {
         return cacheResult;
       }
     }
-
+    // Arabic numbers skip translation
+    if (StringUtils.isNumeric(text)) {
+      return text;
+    }
     String result = selectedTranslator.doTranslate(fromLang, toLang, text
             .replace("\\'", "'")
             .replace("\\\"","\"")

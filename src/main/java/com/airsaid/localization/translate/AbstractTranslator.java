@@ -27,8 +27,6 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
@@ -49,6 +47,8 @@ public abstract class AbstractTranslator implements Translator, TranslatorConfig
 
     String requestUrl = getRequestUrl(fromLang, toLang, text);
     RequestBuilder requestBuilder = HttpRequests.post(requestUrl, CONTENT_TYPE);
+    // Set the timeout time to 60 seconds.
+    requestBuilder.connectTimeout(60 * 1000);
     configureRequestBuilder(requestBuilder);
 
     try {
@@ -56,11 +56,7 @@ public abstract class AbstractTranslator implements Translator, TranslatorConfig
         String requestParams = getRequestParams(fromLang, toLang, text)
             .stream()
             .map(pair -> {
-              try {
-                return pair.first.concat("=").concat(URLEncoder.encode(pair.second, StandardCharsets.UTF_8.name()));
-              } catch (UnsupportedEncodingException e) {
-                throw new TranslationException(fromLang, toLang, text, e);
-              }
+              return pair.first.concat("=").concat(URLEncoder.encode(pair.second, StandardCharsets.UTF_8));
             })
             .collect(Collectors.joining("&"));
         if (!requestParams.isEmpty()) {
@@ -68,13 +64,15 @@ public abstract class AbstractTranslator implements Translator, TranslatorConfig
         }
         String requestBody = getRequestBody(fromLang, toLang, text);
         if (!requestBody.isEmpty()) {
-          request.write(URLEncoder.encode(requestBody, StandardCharsets.UTF_8.name()));
+          request.write(requestBody);
         }
+
         String resultText = request.readString();
         return parsingResult(fromLang, toLang, text, resultText);
       });
-    } catch (IOException e) {
+    } catch (Exception e) {
       e.printStackTrace();
+      LOG.error(e.getMessage(), e);
       throw new TranslationException(fromLang, toLang, text, e);
     }
   }
@@ -126,7 +124,7 @@ public abstract class AbstractTranslator implements Translator, TranslatorConfig
 
   @NotNull
   public List<Pair<String, String>> getRequestParams(@NotNull Lang fromLang, @NotNull Lang toLang, @NotNull String text) {
-    throw new UnsupportedOperationException();
+    return List.of();
   }
 
   @NotNull

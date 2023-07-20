@@ -43,9 +43,10 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.regex.Pattern;
 
 /**
- * Operation service for the android value files. eg: strings.xml or plurals.xml or arrays.xml.
+ * Operation service for the android value files. eg: strings.xml (or any string resource from values directory).
  *
  * @author airsaid
  */
@@ -54,9 +55,7 @@ public final class AndroidValuesService {
 
   private static final Logger LOG = Logger.getInstance(AndroidValuesService.class);
 
-  private static final String NAME_STRINGS_FILE = "strings.xml";
-  private static final String NAME_PLURALS_FILE = "plurals.xml";
-  private static final String NAME_ARRAYS_FILE = "arrays.xml";
+  private static final Pattern STRINGS_FILE_NAME_PATTERN = Pattern.compile(".+\\.xml");
 
   /**
    * Returns the {@link AndroidValuesService} object instance.
@@ -139,10 +138,10 @@ public final class AndroidValuesService {
   }
 
   /**
-   * Verify that the file is a values/string.xml or plurals.xml or arrays.xml file.
+   * Verify that the specified file is a string resource file in the values directory.
    *
    * @param file the verify file.
-   * @return true: the file is values/string.xml or plurals.xml or arrays.xml file.
+   * @return true: the file is a string resource file in the values directory.
    */
   public boolean isValueFile(@Nullable PsiFile file) {
     if (file == null) return false;
@@ -154,9 +153,7 @@ public final class AndroidValuesService {
     if (!parentName.contains("values")) return false;
 
     String fileName = file.getName();
-    return NAME_STRINGS_FILE.equals(fileName) ||
-        NAME_PLURALS_FILE.equals(fileName) ||
-        NAME_ARRAYS_FILE.equals(fileName);
+    return STRINGS_FILE_NAME_PATTERN.matcher(fileName).matches();
   }
 
   /**

@@ -22,8 +22,8 @@ import com.airsaid.localization.translate.lang.Lang;
 import com.airsaid.localization.translate.lang.Languages;
 import com.airsaid.localization.translate.util.GsonUtil;
 import com.airsaid.localization.translate.util.UrlBuilder;
+import com.google.auto.service.AutoService;
 import com.intellij.openapi.diagnostic.Logger;
-import com.intellij.openapi.util.Pair;
 import com.intellij.util.io.RequestBuilder;
 import icons.PluginIcons;
 import org.jetbrains.annotations.NotNull;
@@ -31,12 +31,12 @@ import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
  * @author airsaid
  */
+@AutoService(AbstractTranslator.class)
 public class MicrosoftTranslator extends AbstractTranslator {
 
   private static final Logger LOG = Logger.getInstance(MicrosoftTranslator.class);
@@ -176,11 +176,6 @@ public class MicrosoftTranslator extends AbstractTranslator {
         .addQueryParameter("api-version", "3.0")
         .addQueryParameter("to", toLang.getTranslationCode())
         .build();
-  }
-
-  @Override
-  public @NotNull List<Pair<String, String>> getRequestParams(@NotNull Lang fromLang, @NotNull Lang toLang, @NotNull String text) {
-    return Collections.emptyList();
   }
 
   @Override
