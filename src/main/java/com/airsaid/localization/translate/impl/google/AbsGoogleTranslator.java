@@ -47,6 +47,7 @@ public abstract class AbsGoogleTranslator extends AbstractTranslator {
       List<Lang> languages = new ArrayList<>();
       languages.add(Languages.CHINESE_SIMPLIFIED);
       languages.add(Languages.CHINESE_TRADITIONAL);
+      languages.add(Languages.CHINESE_TRADITIONAL_HK);
       languages.add(Languages.JAPANESE);
       languages.add(Languages.KOREAN);
 
@@ -74,6 +75,8 @@ public abstract class AbsGoogleTranslator extends AbstractTranslator {
           lang = lang.setTranslationCode("pt-BR");
         }else if (lang.equals(Languages.JAVANESE)) {
           lang = lang.setTranslationCode("jw");
+        }else if (lang.equals(Languages.CHINESE_TRADITIONAL_HK)) {
+          lang = lang.setTranslationCode("zh-HK");
         }
         supportedLanguages.add(lang);
       }

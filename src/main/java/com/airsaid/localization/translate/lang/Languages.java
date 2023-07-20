@@ -128,7 +128,7 @@ public class Languages {
   public static final Lang ENGLISH = new Lang(100, "en", "English", "English");
   public static final Lang YORUBA = new Lang(101, "yo", "Yorùbá", "Yoruba");
   public static final Lang VIETNAMESE = new Lang(102, "vi", "Tiếng Việt", "Vietnamese");
-  public static final Lang CHINESE_TRADITIONAL = new Lang(103, "zh-rTW", "正體中文", "Chinese Traditional");
+  public static final Lang CHINESE_TRADITIONAL = new Lang(103, "zh-rTW", "正體中文", "TW Chinese Traditional");
   public static final Lang CHINESE_SIMPLIFIED = new Lang(104, "zh-rCN", "简体中文", "Chinese Simplified");
   public static final Lang ASSAMESE = new Lang(105, "as", "Assamese", "Assamese");
   public static final Lang DARI = new Lang(106, "prs", "Dari", "Dari");
@@ -143,6 +143,7 @@ public class Languages {
   public static final Lang TIGRINYA = new Lang(115, "ti", "ትግርኛ", "Tigrinya");
   public static final Lang TONGAN = new Lang(116, "to", "lea fakatonga", "Tongan");
   public static final Lang YUCATEC_MAYA = new Lang(117, "yua", "Yucatec Maya", "Yucatec Maya");
+  public static final Lang CHINESE_TRADITIONAL_HK = new Lang(118, "zh-rHK", "正體中文", "HK Chinese Traditional");
 
   private static final Map<Integer, Lang> sLanguages;
 
@@ -266,6 +267,7 @@ public class Languages {
     sLanguages.put(115, TIGRINYA);
     sLanguages.put(116, TONGAN);
     sLanguages.put(117, YUCATEC_MAYA);
+    sLanguages.put(118, CHINESE_TRADITIONAL_HK);
   }
 
   public static List<Lang> getLanguages() {
