@@ -85,7 +85,7 @@ public class Languages {
   public static final Lang NEPALI = new Lang(57, "ne", "नेपाली", "Nepali");
   public static final Lang NORWEGIAN = new Lang(58, "no", "Norsk", "Norwegian");
   public static final Lang PUNJABI = new Lang(59, "pa", "ਪੰਜਾਬੀ", "Punjabi");
-  public static final Lang PORTUGUESE = new Lang(60, "pt", "Português", "Portuguese");
+  public static final Lang PORTUGUESE = new Lang(60, "pt-rBR", "Português", "Portuguese");
   public static final Lang PASHTO = new Lang(61, "ps", "Pashto", "Pashto");
   public static final Lang CHICHEWA = new Lang(62, "ny", "Chichewa", "Chichewa");
   public static final Lang JAPANESE = new Lang(63, "ja", "日本語", "Japanese");
@@ -121,7 +121,7 @@ public class Languages {
   public static final Lang IGBO = new Lang(93, "ig", "Igbo", "Igbo");
   public static final Lang ITALIAN = new Lang(94, "it", "Italiano", "Italian");
   public static final Lang YIDDISH = new Lang(95, "yi", "ייִדיש", "Yiddish");
-  public static final Lang HINDI = new Lang(96, "hi", "हिंदी", "Hindi");
+  public static final Lang HINDI = new Lang(96, "hi-rIN", "हिंदी", "Hindi");
   public static final Lang SUNDANESE = new Lang(97, "su", "Sunda", "Sundanese");
   public static final Lang INDONESIAN = new Lang(98, "in-rID", "Indonesia", "Indonesian");
   public static final Lang JAVANESE = new Lang(99, "jv", "Wong Jawa", "Javanese");

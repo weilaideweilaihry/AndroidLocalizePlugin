@@ -43,9 +43,22 @@ public abstract class AbsGoogleTranslator extends AbstractTranslator {
   @NotNull
   public List<Lang> getSupportedLanguages() {
     if (supportedLanguages == null) {
-      List<Lang> languages = Languages.getLanguages();
-      supportedLanguages = new ArrayList<>(104);
-      for (int i = 1; i <= 104; i++) {
+      //List<Lang> languages = Languages.getLanguages();
+      List<Lang> languages = new ArrayList<>();
+      languages.add(Languages.CHINESE_SIMPLIFIED);
+      languages.add(Languages.CHINESE_TRADITIONAL);
+      languages.add(Languages.JAPANESE);
+      languages.add(Languages.KOREAN);
+
+      languages.add(Languages.HINDI);
+      languages.add(Languages.INDONESIAN);
+      languages.add(Languages.PORTUGUESE);
+      languages.add(Languages.RUSSIAN);
+
+
+      supportedLanguages = new ArrayList<>();
+
+      for (int i = 0; i < languages.size(); i++) {
         Lang lang = languages.get(i);
         if (lang.equals(Languages.CHINESE_SIMPLIFIED)) {
           lang = lang.setTranslationCode("zh-CN");
@@ -54,8 +67,12 @@ public abstract class AbsGoogleTranslator extends AbstractTranslator {
         } else if (lang.equals(Languages.FILIPINO)) {
           lang = lang.setTranslationCode("tl");
         } else if (lang.equals(Languages.INDONESIAN)) {
-          lang = lang.setTranslationCode("id");
-        } else if (lang.equals(Languages.JAVANESE)) {
+          lang = lang.setTranslationCode("id-ID");
+        } else if (lang.equals(Languages.HINDI)) {
+          lang = lang.setTranslationCode("hi-IN");
+        } else if (lang.equals(Languages.PORTUGUESE)) {
+          lang = lang.setTranslationCode("pt-BR");
+        }else if (lang.equals(Languages.JAVANESE)) {
           lang = lang.setTranslationCode("jw");
         }
         supportedLanguages.add(lang);

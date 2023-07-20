@@ -151,7 +151,7 @@ public final class AndroidValuesService {
     if (parent == null) return false;
 
     String parentName = parent.getName();
-    if (!"values".equals(parentName)) return false;
+    if (!parentName.contains("values")) return false;
 
     String fileName = file.getName();
     return NAME_STRINGS_FILE.equals(fileName) ||

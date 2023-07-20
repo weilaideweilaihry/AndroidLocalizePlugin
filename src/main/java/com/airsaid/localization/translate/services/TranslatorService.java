@@ -131,7 +131,13 @@ public final class TranslatorService {
       }
     }
 
-    String result = selectedTranslator.doTranslate(fromLang, toLang, text);
+    String result = selectedTranslator.doTranslate(fromLang, toLang, text
+            .replace("\\'", "'")
+            .replace("\\\"","\"")
+            .replace("%1$dth","%1$d")
+            .replace("%2$dth","%2$d")
+            .replace("%3$dth","%3$d")
+            .replace("%4$dth","%4$d"));
     LOG.info(String.format("doTranslate result: %s", result));
     for (TranslationInterceptor interceptor : translationInterceptors) {
       result = interceptor.process(result);
